@@ -1,0 +1,103 @@
+--// ❤️‍🔥Quantewwen_v2yedun🤑 GUI (2 cột + QuantapcodeHop + Noclip fix)
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local player = Players.LocalPlayer
+
+-- Tạo GUI chính
+local ScreenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+ScreenGui.Name = "Quantewwen_v2yedun"
+
+local mainFrame = Instance.new("Frame", ScreenGui)
+mainFrame.Size = UDim2.new(0, 250, 0, 400)
+mainFrame.Position = UDim2.new(0.35, 0, 0.3, 0)
+mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+mainFrame.Active = true
+mainFrame.Draggable = true
+Instance.new("UICorner", mainFrame).CornerRadius = UDim.new(0, 12)
+
+local UIStroke = Instance.new("UIStroke", mainFrame)
+UIStroke.Color = Color3.fromRGB(0, 255, 150)
+UIStroke.Thickness = 2
+
+local title = Instance.new("TextLabel", mainFrame)
+title.Size = UDim2.new(1, 0, 0, 35)
+title.BackgroundTransparency = 1
+title.Text = "🌐 Quantewwen_v2yedun"
+title.TextColor3 = Color3.fromRGB(0, 255, 150)
+title.Font = Enum.Font.GothamBold
+title.TextSize = 16
+
+-- Lưu vị trí
+local savedPositions = {}
+local function savePos(name)
+    if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+        savedPositions[name] = player.Character.HumanoidRootPart.Position
+        print("✅ Đã lưu vị trí: " .. name)
+    end
+end
+
+-- Bay mượt
+local function SmoothFly(hrp, target)
+    local speed, step = 100, 0.1
+    local direction = (target - hrp.Position).Unit
+    local distance = (hrp.Position - target).Magnitude
+    local moved = 0
+    while moved < distance and player.Character and player.Character:FindFirstChild("HumanoidRootPart") do
+        hrp.CFrame = hrp.CFrame + direction * (speed * step)
+        moved = moved + (speed * step)
+        task.wait(step)
+    end
+end
+
+local function FlyToBase()
+    if not savedPositions["Base"] then return end
+    local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+    if hrp then
+        SmoothFly(hrp, savedPositions["Base"] + Vector3.new(0, 10, 0))
+    end
+end
+
+local function FlyUp()
+    local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+    if hrp then
+        hrp.CFrame = hrp.CFrame + Vector3.new(0, 50, 0)
+    end
+end
+
+-- Noclip fix
+local noclip = false
+RunService.Stepped:Connect(function()
+    if noclip and player.Character and player.Character:FindFirstChild("Humanoid") then
+        player.Character.Humanoid:ChangeState(11)
+    end
+end)
+
+local function toggleNoclip()
+    noclip = not noclip
+    print("Noclip:", noclip and "Bật" or "Tắt")
+end
+
+-- Tạo nút
+local function createButton(text, xOffset, yOffset, callback)
+    local btn = Instance.new("TextButton", mainFrame)
+    btn.Size = UDim2.new(0.45, 0, 0, 30)
+    btn.Position = UDim2.new(xOffset, 10, 0, yOffset)
+    btn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btn.Font = Enum.Font.GothamBold
+    btn.TextSize = 14
+    btn.Text = text
+    Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 8)
+    btn.MouseButton1Click:Connect(callback)
+    return btn
+end
+
+-- Các nút (2 cột)
+createButton("📍 Lưu Base", 0, 40, function() savePos("Base") end)
+createButton("🚀 Fly lên đầu", 0.5, 40, FlyUp)
+createButton("🚀 Fly về Base", 0.5, 80, FlyToBase)
+createButton("🚪 Lưu Cửa Tầng 1", 0, 80, function() savePos("Cửa Tầng 1") end)
+createButton("🌀 Noclip", 0, 120, toggleNoclip)
+createButton("🌐 QuantapcodeHop", 0.5, 120, function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/murilolol/nslx-autojoiner/refs/heads/main/free.lua"))()
+end)
