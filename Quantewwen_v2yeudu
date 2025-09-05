@@ -1,11 +1,11 @@
---// ❤️‍🔥Quantewwen_v2ydu🤑 GUI (2 cột + QuantapcodeHop + Noclip fix)
+--// ❤️‍🔥Quantewwen_v2yedun🤑 GUI (2 cột + QuantapcodeHop + Noclip fix)
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local player = Players.LocalPlayer
 
 -- Tạo GUI chính
 local ScreenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
-ScreenGui.Name = "Quantewwen_v2"
+ScreenGui.Name = "Quantewwen_v2yedun"
 
 local mainFrame = Instance.new("Frame", ScreenGui)
 mainFrame.Size = UDim2.new(0, 250, 0, 400)
@@ -22,7 +22,7 @@ UIStroke.Thickness = 2
 local title = Instance.new("TextLabel", mainFrame)
 title.Size = UDim2.new(1, 0, 0, 35)
 title.BackgroundTransparency = 1
-title.Text = "🌐 Quantewwen_v2ydu"
+title.Text = "🌐 Quantewwen_v2yedun"
 title.TextColor3 = Color3.fromRGB(0, 255, 150)
 title.Font = Enum.Font.GothamBold
 title.TextSize = 16
