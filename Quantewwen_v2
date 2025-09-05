@@ -1,4 +1,4 @@
---// Quantewwen_v1 GUI (1 cột + QuantapcodeHop)
+--// ❤️‍🔥Quantewwen_v2🤑 GUI (1 cột + QuantapcodeHop)
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
@@ -47,12 +47,21 @@ local function SmoothFly(hrp, target)
     end
 end
 
--- Bay về base
+-- Fly về base
 local function FlyToBase()
     if not savedPositions["Base"] then return end
     local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
     if not hrp then return end
     SmoothFly(hrp, savedPositions["Base"] + Vector3.new(0, 10, 0))
+end
+
+-- Fly lên đầu
+local function FlyToHead()
+    local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+    local head = player.Character and player.Character:FindFirstChild("Head")
+    if hrp and head then
+        SmoothFly(hrp, head.Position + Vector3.new(0, 2, 0))
+    end
 end
 
 -- Noclip
@@ -83,15 +92,14 @@ local function createButton(text, order, callback)
     return btn
 end
 
--- Các nút
+-- Các nút theo thứ tự mới
 createButton("📍 Lưu Base", 0, function() savePos("Base") end)
-createButton("🚪 Lưu Cửa Tầng 1", 1, function() savePos("Cửa Tầng 1") end)
-createButton("🚪 Lưu Cửa Tầng 2", 2, function() savePos("Cửa Tầng 2") end)
-createButton("🚪 Lưu Cửa Tầng 3", 3, function() savePos("Cửa Tầng 3") end)
-createButton("🚀 Fly về Base", 4, FlyToBase)
-createButton("🌀 Noclip", 5, toggleNoclip)
-
--- Thêm QuantapcodeHop (autojoin)
-createButton("🌐 QuantapcodeHop", 6, function()
+createButton("🚀 Fly lên đầu", 1, FlyToHead)
+createButton("🚪 Lưu Cửa Tầng 1", 2, function() savePos("Cửa Tầng 1") end)
+createButton("🚪 Lưu Cửa Tầng 2", 3, function() savePos("Cửa Tầng 2") end)
+createButton("🚪 Lưu Cửa Tầng 3", 4, function() savePos("Cửa Tầng 3") end)
+createButton("🚀 Fly về Base", 5, FlyToBase)
+createButton("🌀 Noclip", 6, toggleNoclip)
+createButton("🌐 QuantapcodeHop", 7, function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/murilolol/nslx-autojoiner/refs/heads/main/free.lua"))()
 end)
